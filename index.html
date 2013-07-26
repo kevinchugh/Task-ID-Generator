@@ -42,7 +42,6 @@
 				var match;
 				var input = document.body.innerText;
 				hits = input.match(pattern);
-
 				if(hits)
 				{
 					for(var a=0;a<hits.length;a++)
@@ -57,9 +56,6 @@
 						}
 					}
 				}
-				else
-				{
-			}
 
 				TodaysHits.sort();
 				var maxLetter='A';
@@ -68,7 +64,7 @@
 				for(a=0;a<TodaysHits.length;a++)
 				{
 					suffix=TodaysHits[a].substring(prefix.length+2,prefix.length+3);
-					if(suffix>maxLetter)
+					if(suffix>=nextLetter)
 					{
 						maxLetter=suffix;
 						nextLetter = String.fromCharCode(maxLetter.charCodeAt(0) + 1);
