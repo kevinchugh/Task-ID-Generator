@@ -10,15 +10,13 @@
 			<p>In Asana, for example, if you close out Task 5, Task 6 becomes Task 5.</p>
 			<h2>The Solution</h2>
 			<p>This bookmarklet prepends input or textarea DOM elements with a
-				simple canonical task ID, based on today's date and some letters.
+				simple canonical task ID, based on today's date and 3 random letters.
 			</p>
 			<p>The ID generated is of the form [425-ABC] where "425" means April 25th,
-				and ABC is the probablistically globally unique identifier.  The
-				bookmarklet scans the page for an existing code with today's date,
-				increments the first character, and then adds two random letters.
+				and ABC is the probablistically globally unique identifier. 
 				The rationale for this is in case you're working on multiple projects
 				or there are some tasks that are currently not visible, you have
-				a pretty good chance of not colliding globally (currently 1/(26*26) chance).
+				a pretty good chance of not colliding globally (currently 1/(26*26*26)  = 1/17576 chance).
 			</p>
 			<h2>Installation</h2>
 			<p>Drag the link below to your tool bar, and then select an task in 
@@ -32,7 +30,6 @@
 			
 			function AddTaskId()
 			{		
-				var TodaysHits = new Array();
 				var d = new Date();
 				var month = d.getMonth()+1;
 				var day = ('0' + d.getDate()).slice(-2);
@@ -40,46 +37,16 @@
 				var hits = new Array();
 				var pattern = /\[[0-9]*\-[A-Z]*\]/g;
 				var match;
-				var input = document.body.innerText;
-				hits = input.match(pattern);
-				if(hits)
-				{
-					for(var a=0;a<hits.length;a++)
-					{
-						hit=hits[a];
-						if(hit.indexOf(prefix)!==-1)
-						{
-							if(TodaysHits.indexOf(hit)==-1)
-							{
-								TodaysHits[TodaysHits.length]=hit;
-							}
-						}
-					}
-				}
+				var input = document.all[0].innerHTML;
 
-				TodaysHits.sort();
-				var maxLetter='A';
-				var nextLetter='A';
-				var suffix;
-				for(a=0;a<TodaysHits.length;a++)
-				{
-					suffix=TodaysHits[a].substring(prefix.length+2,prefix.length+3);
-					if(suffix>=nextLetter)
-					{
-						maxLetter=suffix;
-						nextLetter = String.fromCharCode(maxLetter.charCodeAt(0) + 1);
-					}
-				}
-				
 				var possible = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
-				var optional = '';
-				/*if you don't want the extra characters, start removing here*/
-			    for( var i=0; i < 2; i++ )
+				var suffix='';
+			    for( var i=0; i < 3; i++ )
         			{
-        			optional += possible.charAt(Math.floor(Math.random() * possible.length));
+        			suffix += possible.charAt(Math.floor(Math.random() * possible.length));
         			}
         		/*and end removing here*/
-				var taskString='['+prefix+'-'+nextLetter+optional+']';
+				var taskString='['+prefix+'-'+suffix+']';
 
 				var element=document.activeElement;
 				if(!element.value.match(pattern))
