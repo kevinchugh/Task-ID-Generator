@@ -23,7 +23,7 @@ Developer A: "Hey how is task 322-ACE coming along?"
 Developer B: "Great, but we should ship it with 321-DEE, don't you think?"
 Developer A: "Yes."
 Developer B: "This has been a pleasant interaction regarding our work."
-Develoepr A: "I agree.  It's pleasant to have canonical task IDs."
+Developer A: "I agree.  It's pleasant to have canonical task IDs."
 
 Usage:
 
